@@ -1,0 +1,65 @@
+.profile {
+    margin: none;
+    padding: none;
+    height: 100vh;
+    display: flex;
+    background-color: rgba(119, 213, 234, 0.8);
+}
+
+.image {
+    /* background-color: rgba(119, 213, 234, 0.8); */
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: none;
+}
+
+.pic {
+    height: 100%;
+}
+
+.info {
+    padding: 30px;
+    padding-left: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.role {
+    font-size: 20px;
+}
+
+.company {
+    display: flex;
+    gap: 300px;
+}
+
+.education .company {
+    display: flex;
+    gap: 150px;
+}
+
+.experience .duration {
+    width: 200px;
+    color: blue;
+}
+
+.title{
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.education .duration {
+    width: 200px;
+    color: blue;
+}
+
+.list {
+    margin-bottom: 10px;
+}
+
+.experience {
+    margin-bottom: 40px;
+}
+
+.education {
+    margin-bottom: 40px;
+}

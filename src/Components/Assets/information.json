@@ -1,0 +1,44 @@
+{
+    "internships" : [
+        {
+            "id": 1,
+            "duration": "Oct 2023 - Nov 2023",
+            "company": "MotionCut",
+            "comp_desc": " - Video Studio",
+            "role": "Web Development Internship",
+            "description": "Completed 4 tasks Internship programme on Web Development."
+        },
+        {
+            "id": 2,
+            "duration": "Jan 2023 - Feb 2023",
+            "company": "TASK",
+            "comp_desc": " - Oracle Academy",
+            "role": "Fundamentals of Java",
+            "description": "Completed 90-Hour Internship and training programme on Fundamentals of Java and made some projects on Java."
+        }
+    ],
+
+    "education" : [
+        {
+            "id": 1,
+            "duration": "2021 - 2025",
+            "company" : "Chaitanya Bharathi Institute of Technolohy",
+            "role": "B.E. Computer Science and Engineering",
+            "description": "CGPA - 9.32/10.00"
+        },
+        {
+            "id": 2,
+            "duration": "2019 - 2021",
+            "company" : "Narayana Junior College",
+            "role": "Intermediate - MPC",
+            "description": "Percentage - 98.6%"
+        },
+        {
+            "id": 3,
+            "duration": "2019",
+            "company" : "Sri Sai Grammar High School",
+            "role": "Secondary School - X",
+            "description": "GPA - 9.8"
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+.project {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: none;
+    padding: none;
+    height: 100vh;
+    background-color: rgba(119, 213, 234, 0.8);
+}
+
+.project .title{
+    padding: 20px;
+    font-size: 35px;
+    margin-bottom: 20px;
+    color: rgb(28, 72, 89);
+}
+
+.project-card .title {
+    font-size: 27px;
+    color: black;
+    text-align: center;
+}
+
+.projects {
+    display: flex;
+    gap: 120px;
+    padding: 0px 120px;
+}
+
+.project-card .card-1, .card-2, .card-3 {
+    background-color: white;
+    height: 450px;
+    width: 345px;
+    border-radius: 50px;
+    background-size: 100% 100%;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project-card .card-1 .title, .card-2 .title, .card-3 .title {
+    font-size: 30px;
+    text-align: center
+}
+
+.card-1 {
+    background-image: url('./Assets/weather.png');
+}
+
+.card-2 {
+    background-image: url('./Assets/calculator.jpg');
+}
+
+.card-3 {
+    background-image: url('./Assets/elevator.jpg');
+}
