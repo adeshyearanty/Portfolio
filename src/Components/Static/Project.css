@@ -1,0 +1,67 @@
+.project {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: none;
+    padding: none;
+    height: 100vh;
+    background-color: rgba(119, 213, 234, 0.8);
+}
+
+.project .title {
+    padding: 10px 50px;
+}
+
+.project-card .title {
+    font-size: 25px;
+    color: black;
+    height: fit-content;
+    width: 100px;
+    transform: rotate(270deg);
+    margin-top: 200px;
+}
+
+.projects {
+    margin-top: 100px;
+    display: flex;
+    gap: 40px;
+}
+
+.card {
+    height: 450px;
+    width: 345px;
+    border-radius: 50px;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: background color with transparency */
+    padding: 10px;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.card:hover::after {
+    content: 'View Description';
+    background-color: rgba(3, 18, 21, 0.282);
+}
+
+.projImage {
+    height: 100%;
+    width: 100%;
+    border-radius: 50px;
+}
+
+.project-card {
+    display: flex;
+}

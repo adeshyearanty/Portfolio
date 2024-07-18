@@ -1,12 +1,12 @@
 import React from "react";
-import "./Profile.css"
+import "./Static/Profile.css"
 import profile from './Assets/Profile.png'
 import Card from './Card.jsx'
 import data from './Assets/information.json'
 
 function Profile() {
     return (
-        <div className="profile">
+        <div className="profile" id="profile">
             <div className="image">
                 <img src={profile} alt="no image" className="pic" />
             </div>

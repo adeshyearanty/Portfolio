@@ -3,9 +3,12 @@ import React from 'react';
 function ProjectCard(props) {
     return (
         <div className="project-card">
-            <p className='title'>{props.title}</p>
-            <div className={props.className}>
-            </div>
+            <div className='title'>{props.title}</div>
+            <a href={props.id}>
+                <div className="card">
+                    <img src={props.imgSrc} alt="" className='projImage' />
+                </div>
+            </a>
         </div>
     );
 }

@@ -1,29 +1,31 @@
 import React from 'react';
-import './Project.css'
+import './Static/Project.css'
 import ProjectCard from './ProjectCard';
-import weather from './Assets/weather.png';
-import calculator from './Assets/calculator.jpg';
-import elevator from './Assets/elevator.jpg';
+import bookStore from './Assets/bookStore.png'
+import elevator from './Assets/elevator.jpg'
+import weather from './Assets/weather.png'
 
 function Project() {
     return (
-        <div className="project">
+        <div className="project" id='projects'>
             <div className="title">Projects</div>
             <div className="projects">
                 <ProjectCard 
+                    id = "#weather-card"
                     title = "Weather Application"
-                    imgsrc = {weather}
-                    className = "card-1"
+                    imgSrc = {weather}
+                    gitRepo = "https://github.com/adeshyearanty/Weather-Application"
                 />
                 <ProjectCard 
-                    title = "Simple Calculator"
-                    imgsrc = {calculator}
-                    className = "card-2"
+                    id = "#book-store-card"
+                    title = "Book Store"
+                    imgSrc = {bookStore}
+                    gitRepo = "https://github.com/adeshyearanty/book-store-MERN"
                 />
                 <ProjectCard 
+                    id = "#elevator-card"
                     title = "Elevator Applications"
-                    imgsrc = {elevator}
-                    className = "card-3"
+                    imgSrc = {elevator}
                 />
             </div>
         </div>
