@@ -1,0 +1,30 @@
+#contact {
+    display: flex;
+    height: 300px;
+    background-color: rgba(96, 184, 204, 0.8);
+    color: white;
+    gap: 100px;
+}
+
+.left-container {
+    text-align: center;
+    margin: auto;
+}
+
+.get-in-touch {
+    font-size: 120px;
+}
+
+.right-container {
+    width: 100px;
+    margin: auto;
+}
+
+.right-container a {
+    color: white;
+    text-decoration: none;  
+}
+
+.email {
+    color: rgb(39, 39, 103);
+}
