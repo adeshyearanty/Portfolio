@@ -1,65 +1,229 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Container, Section, Kicker, Display, Lead } from "@/app/_components/primitives";
+import { Reveal } from "@/app/_components/reveal";
+import { FeaturedMessagingDiagram } from "@/app/_components/diagrams";
+import { profile, signals, capabilities, metrics } from "@/app/_data/site";
+
+const WHATSAPP =
+  "https://wa.me/919700015263?text=Hi%20Adesh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* ---------------------------------------------------------------- Hero */}
+      <Section className="border-t-0">
+        <Container className="pb-24 pt-40 sm:pt-48 lg:pb-32">
+          <Reveal>
+            <Kicker>
+              Full Stack Developer · Event-Driven Systems · AWS & NestJS
+            </Kicker>
+          </Reveal>
+
+          <Reveal delay={120} as="h1" className="mt-10 max-w-4xl">
+            <span className="block text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] text-paper sm:text-7xl lg:text-[5.25rem]">
+              Adesh Yearanty builds{" "}
+              <span className="text-signal">event-driven systems.</span>
+            </span>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <Lead className="mt-8 max-w-2xl">{profile.tagline}</Lead>
+          </Reveal>
+
+          <Reveal delay={300}>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                href="/work"
+                className="rounded-full bg-paper px-6 py-3 text-sm font-medium text-base transition-colors hover:bg-signal"
+              >
+                View selected work
+              </Link>
+              <Link
+                href="/contact"
+                className="rounded-full border border-hairline-strong px-6 py-3 text-sm text-paper transition-colors hover:border-signal hover:text-signal"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={380}>
+            <dl className="mt-20 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-hairline pt-10 lg:grid-cols-4">
+              {signals.map((s) => (
+                <div key={s.label}>
+                  <dt className="text-base font-medium text-paper">{s.label}</dt>
+                  <dd className="mt-1 text-sm text-slate">{s.detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* ------------------------------------------------------- Capabilities */}
+      <Section>
+        <Container className="py-24 lg:py-32">
+          <Reveal>
+            <Kicker index="01">What I do</Kicker>
+          </Reveal>
+          <Reveal delay={80}>
+            <Display className="mt-8 max-w-3xl">
+              Engineering the spine of an AI-powered CRM.
+            </Display>
+          </Reveal>
+
+          <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-2">
+            {capabilities.map((cap, i) => (
+              <Reveal key={cap.title} delay={i * 80}>
+                <div className="group flex h-full flex-col bg-base p-8 transition-colors duration-500 hover:bg-surface sm:p-10">
+                  <span className="font-mono text-xs text-signal tabular-nums">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-6 text-xl font-medium tracking-tight text-paper">
+                    {cap.title}
+                  </h3>
+                  <p className="mt-3 text-pretty text-[15px] leading-relaxed text-slate">
+                    {cap.body}
+                  </p>
+                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-mist">
+                    {cap.stack}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ----------------------------------------------- Featured case study */}
+      <Section className="bg-surface">
+        <Container className="py-24 lg:py-32">
+          <Reveal>
+            <Kicker index="02">Featured · Architecture case study</Kicker>
+          </Reveal>
+
+          <div className="mt-10 grid gap-14 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+            <Reveal delay={80}>
+              <div>
+                <Display className="max-w-xl">
+                  SalesAstra — a multi-tenant omnichannel CRM platform.
+                </Display>
+                <p className="mt-6 max-w-lg text-pretty leading-relaxed text-mist">
+                  A production-grade platform unifying WhatsApp, Instagram,
+                  Messenger, and a custom web chatbot into a single
+                  tenant-isolated inbox, with event-driven message ingestion,
+                  real-time WebSocket delivery, AI-assisted conversation routing,
+                  and a graph-based RBAC system teams rely on daily.
+                </p>
+
+                <ul className="mt-8 space-y-3 text-sm text-slate">
+                  {[
+                    "Tenant isolation at the data, routing, and permission layer",
+                    "Sub-second message fanout over NestJS WebSockets",
+                    "Graph-based RBAC with scope enforcement across microservices",
+                  ].map((point) => (
+                    <li key={point} className="flex gap-3">
+                      <span className="mt-2 h-px w-4 shrink-0 bg-signal" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+
+                <dl className="mt-10 flex gap-10 border-t border-hairline pt-6">
+                  <div>
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate">
+                      Channels
+                    </dt>
+                    <dd className="mt-1 text-2xl font-medium text-paper">
+                      4 <span className="text-sm text-slate">unified</span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate">
+                      Tenancy
+                    </dt>
+                    <dd className="mt-1 text-2xl font-medium text-paper">
+                      Multi<span className="text-sm text-slate">-tenant</span>
+                    </dd>
+                  </div>
+                </dl>
+
+                <Link
+                  href="/work"
+                  className="mt-8 inline-flex items-center gap-2 text-sm text-mist transition-colors hover:text-signal"
+                >
+                  Read the case studies
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={180}>
+              <FeaturedMessagingDiagram />
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ----------------------------------------------------- Achievements */}
+      <Section>
+        <Container className="py-24 lg:py-32">
+          <Reveal>
+            <Kicker index="03">By the numbers</Kicker>
+          </Reveal>
+          <Reveal delay={80}>
+            <Display className="mt-8 max-w-2xl">
+              Production systems, not tutorial projects.
+            </Display>
+          </Reveal>
+
+          <div className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline lg:grid-cols-4">
+            {metrics.map((m, i) => (
+              <Reveal key={m.label} delay={i * 90} className="h-full">
+                <div className="flex h-full flex-col bg-base p-8 sm:p-10">
+                  <p className="text-4xl font-semibold tracking-tight text-paper sm:text-5xl">
+                    {m.value}
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-slate">
+                    {m.label}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ------------------------------------------------------- Contact CTA */}
+      <Section className="bg-surface">
+        <Container className="py-28 text-center lg:py-40">
+          <Reveal>
+            <Kicker className="justify-center">Let&apos;s work together</Kicker>
+          </Reveal>
+          <Reveal delay={100} as="h2" className="mx-auto mt-8 max-w-3xl">
+            <span className="block text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.03em] text-paper sm:text-6xl">
+              Let&apos;s build systems that scale.
+            </span>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mx-auto mt-6 max-w-xl text-pretty text-mist">
+              Open to engineering teams building event-driven, multi-tenant
+              platforms — and the infrastructure that keeps them honest.
+            </p>
+          </Reveal>
+          <Reveal delay={280}>
+            <Link
+              href={WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-medium text-base transition-colors hover:bg-signal"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              Start a conversation
+              <span aria-hidden>→</span>
+            </Link>
+          </Reveal>
+        </Container>
+      </Section>
+    </>
   );
 }
