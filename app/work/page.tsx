@@ -54,6 +54,41 @@ export default function WorkPage() {
                         {p.description}
                       </p>
 
+                      {p.slug === "omni-channel-messaging" && (
+                        <div className="mt-6 flex flex-col gap-2">
+                          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-slate">Related writing</span>
+                          <Link
+                            href="/blog/kinesis-vs-sqs-messaging-pipeline"
+                            className="inline-flex items-center gap-1.5 text-[13px] text-mist transition-colors hover:text-signal"
+                          >
+                            <span>→</span>
+                            <span className="underline decoration-hairline-strong underline-offset-4 hover:decoration-signal">Why I chose Kinesis over SQS</span>
+                          </Link>
+                        </div>
+                      )}
+
+                      {p.slug === "access-control-infra" && (
+                        <div className="mt-6 flex flex-col gap-2">
+                          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-slate">Related writing</span>
+                          <div className="flex flex-col gap-2">
+                            <Link
+                              href="/blog/rbac-system-that-doesnt-lie"
+                              className="inline-flex items-center gap-1.5 text-[13px] text-mist transition-colors hover:text-signal"
+                            >
+                              <span>→</span>
+                              <span className="underline decoration-hairline-strong underline-offset-4 hover:decoration-signal">Designing a RBAC system that doesn&apos;t lie</span>
+                            </Link>
+                            <Link
+                              href="/blog/redis-version-based-caching"
+                              className="inline-flex items-center gap-1.5 text-[13px] text-mist transition-colors hover:text-signal"
+                            >
+                              <span>→</span>
+                              <span className="underline decoration-hairline-strong underline-offset-4 hover:decoration-signal">Redis version-based caching</span>
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+
                       <ul className="mt-8 space-y-3 text-sm text-slate">
                         {p.decisions.map((d) => (
                           <li key={d} className="flex gap-3">
