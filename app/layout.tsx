@@ -3,6 +3,7 @@ import { Instrument_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/app/_components/site-nav";
 import { SiteFooter } from "@/app/_components/site-footer";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const instrument = Instrument_Sans({
   variable: "--font-instrument",
@@ -46,25 +47,11 @@ export default function RootLayout({
       lang="en"
       className={`${instrument.variable} ${mono.variable} h-full`}
     >
-      <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-L2Q4Y88SER" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-L2Q4Y88SER');
-              })();
-            `,
-          }}
-        />
-      </head>
       <body className="flex min-h-full flex-col bg-base">
         <SiteNav />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <GoogleAnalytics gaId="G-L2Q4Y88SER" />
       </body>
     </html>
   );
