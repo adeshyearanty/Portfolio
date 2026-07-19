@@ -46,6 +46,21 @@ export default function RootLayout({
       lang="en"
       className={`${instrument.variable} ${mono.variable} h-full`}
     >
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-L2Q4Y88SER" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-L2Q4Y88SER');
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-base">
         <SiteNav />
         <main className="flex-1">{children}</main>
