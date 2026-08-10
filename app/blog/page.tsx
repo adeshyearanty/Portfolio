@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "securing-admin-access-dual-header-impersonation",
+    title: "Securing administrative access with a dual-header impersonation framework",
+    excerpt:
+      "Separating user authentication from dynamic authorization overlays. A deep dive into the dual-header architecture that enables secure administrator impersonation under AWS Cognito.",
+    date: "Aug 2026",
+    readingTime: "6 min",
+    category: "Systems",
+  },
+  {
     slug: "kinesis-vs-sqs-messaging-pipeline",
     title: "Why I chose Kinesis over SQS for the messaging pipeline",
     excerpt:

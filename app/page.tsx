@@ -5,7 +5,7 @@ import { FeaturedMessagingDiagram } from "@/app/_components/diagrams";
 import { profile, signals, capabilities, metrics } from "@/app/_data/site";
 
 const WHATSAPP =
-  "https://wa.me/919700015263?text=Hi%20Adesh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.";
+  "https://wa.me/message/WBX66Q3PYHI6N1";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
         <Container className="pb-24 pt-40 sm:pt-48 lg:pb-32">
           <Reveal>
             <Kicker>
-              Full Stack Developer · Event-Driven Systems · AWS & NestJS
+              Full-Stack Engineer (Distributed Systems & AWS) · Microservices · Event-Driven Systems
             </Kicker>
           </Reveal>
 
@@ -72,9 +72,18 @@ export default function Home() {
             </Display>
           </Reveal>
 
-          <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-2">
+          <div className="mt-16 grid grid-cols-1 overflow-hidden rounded-2xl border border-hairline bg-base sm:grid-cols-2">
             {capabilities.map((cap, i) => (
-              <Reveal key={cap.title} delay={i * 80}>
+              <Reveal
+                key={cap.title}
+                delay={i * 80}
+                className={`h-full w-full ${i < 2
+                    ? "border-b border-hairline"
+                    : i === 2
+                      ? "border-b border-hairline sm:border-b-0"
+                      : ""
+                  } ${i % 2 === 0 ? "sm:border-r sm:border-hairline" : ""}`}
+              >
                 <div className="group flex h-full flex-col bg-base p-8 transition-colors duration-500 hover:bg-surface sm:p-10">
                   <span className="font-mono text-xs text-signal tabular-nums">
                     {String(i + 1).padStart(2, "0")}
@@ -177,9 +186,16 @@ export default function Home() {
             </Display>
           </Reveal>
 
-          <div className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline lg:grid-cols-4">
+          <div className="mt-16 grid grid-cols-2 overflow-hidden rounded-2xl border border-hairline bg-base lg:grid-cols-4">
             {metrics.map((m, i) => (
-              <Reveal key={m.label} delay={i * 90} className="h-full">
+              <Reveal
+                key={m.label}
+                delay={i * 90}
+                className={`h-full w-full ${i < 2 ? "border-b border-hairline lg:border-b-0" : ""
+                  } ${i % 2 === 0 ? "border-r border-hairline" : ""
+                  } ${i < 3 ? "lg:border-r lg:border-hairline" : "lg:border-r-0"
+                  }`}
+              >
                 <div className="flex h-full flex-col bg-base p-8 sm:p-10">
                   <p className="text-4xl font-semibold tracking-tight text-paper sm:text-5xl">
                     {m.value}

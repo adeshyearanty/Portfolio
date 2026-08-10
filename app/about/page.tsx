@@ -6,7 +6,7 @@ import { principles, education } from "@/app/_data/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Adesh Yearanty — full stack developer building event-driven, multi-tenant systems on NestJS, Next.js, and AWS at Miraki Technologies.",
+    "Adesh Yearanty — Full-Stack Engineer (Distributed Systems & AWS) building event-driven, multi-tenant systems on NestJS, Next.js, and AWS at Miraki Technologies.",
 };
 
 const FACTS = [
@@ -27,7 +27,7 @@ export default function AboutPage() {
             <span className="text-signal">last under load.</span>
           </>
         }
-        lead="I'm a Full Stack Developer at Miraki Technologies and a core engineer on SalesAstra. I care most about the parts of a system you don't see in a demo — ordering, isolation, and access control under real load."
+        lead="I'm a Full-Stack Engineer (Distributed Systems & AWS) at Miraki Technologies and a core engineer on SalesAstra. I care most about the parts of a system you don't see in a demo — ordering, isolation, and access control under real load."
       />
 
       <Section>
@@ -36,7 +36,7 @@ export default function AboutPage() {
             <Reveal>
               <div className="space-y-6 text-pretty text-lg leading-relaxed text-mist">
                 <p>
-                  I&apos;m a full stack developer at Miraki Technologies, where I
+                  I&apos;m a Full-Stack Engineer (Distributed Systems & AWS) at Miraki Technologies, where I
                   work as a core engineer on SalesAstra — an AI-powered,
                   multi-tenant CRM platform. My work spans the whole system:
                   event-driven pipelines on AWS, real-time WebSocket layers,
@@ -107,9 +107,19 @@ export default function AboutPage() {
             </Display>
           </Reveal>
 
-          <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-2">
+          <div className="mt-16 grid grid-cols-1 overflow-hidden rounded-2xl border border-hairline bg-surface sm:grid-cols-2">
             {principles.map((p, i) => (
-              <Reveal key={p.title} delay={i * 80}>
+              <Reveal
+                key={p.title}
+                delay={i * 80}
+                className={`h-full w-full ${
+                  i < 2
+                    ? "border-b border-hairline"
+                    : i === 2
+                      ? "border-b border-hairline sm:border-b-0"
+                      : ""
+                } ${i % 2 === 0 ? "sm:border-r sm:border-hairline" : ""}`}
+              >
                 <div className="h-full bg-surface p-8 sm:p-10">
                   <span className="font-mono text-xs text-signal tabular-nums">
                     {String(i + 1).padStart(2, "0")}

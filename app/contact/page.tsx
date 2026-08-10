@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const WHATSAPP =
-  "https://wa.me/919700015263?text=Hi%20Adesh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.";
+  "https://wa.me/message/WBX66Q3PYHI6N1";
 
 const CHANNELS = [
   ...socials,

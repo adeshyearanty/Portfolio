@@ -9,6 +9,26 @@ export const metadata: Metadata = {
     "The tools Adesh Yearanty reaches for — NestJS, Next.js, TypeScript, AWS, MongoDB, Redis, Terraform, and the rest of a production-tested stack.",
 };
 
+function getTechBorderClasses(i: number) {
+  const bottom =
+    i < 6
+      ? "border-b border-hairline"
+      : i === 6
+        ? "border-b border-hairline sm:border-b-0"
+        : "";
+
+  const right =
+    i === 0 || i === 4 || i === 6
+      ? "sm:border-r sm:border-hairline"
+      : i === 1 || i === 3
+        ? "lg:border-r lg:border-hairline"
+        : i === 2
+          ? "sm:border-r sm:border-hairline lg:border-r-0"
+          : "";
+
+  return `${bottom} ${right}`.trim();
+}
+
 export default function TechnologyPage() {
   return (
     <>
@@ -25,9 +45,15 @@ export default function TechnologyPage() {
 
       <Section>
         <Container className="py-16 lg:py-24">
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-hairline bg-base sm:grid-cols-2 lg:grid-cols-3">
             {techGroups.map((g, i) => (
-              <Reveal key={g.title} delay={(i % 3) * 80}>
+              <Reveal
+                key={g.title}
+                delay={(i % 3) * 80}
+                className={`h-full w-full ${
+                  i === 6 ? "lg:col-span-2" : i === 7 ? "lg:col-span-1" : ""
+                } ${getTechBorderClasses(i)}`}
+              >
                 <div className="grid-texture h-full bg-base p-8 sm:p-10">
                   <div className="flex items-baseline justify-between">
                     <h2 className="text-lg font-medium tracking-tight text-paper">

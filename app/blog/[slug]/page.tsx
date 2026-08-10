@@ -7,6 +7,17 @@ import { Reveal } from "@/app/_components/reveal";
 // ------------------------------------------------------------- Article metadata
 const POSTS = [
   {
+    slug: "securing-admin-access-dual-header-impersonation",
+    title: "Securing administrative access with a dual-header impersonation framework",
+    date: "Aug 2026",
+    readingTime: "6 min",
+    category: "Systems",
+    excerpt:
+      "Separating user authentication from dynamic authorization overlays. A deep dive into the dual-header architecture that enables secure administrator impersonation under AWS Cognito.",
+    seoTitle: "Securing administrative access with a dual-header impersonation framework — Adesh Yearanty",
+    seoDescription: "A deep dive into separating authentication from authorization context during administrative user impersonation under AWS Cognito and NestJS.",
+  },
+  {
     slug: "kinesis-vs-sqs-messaging-pipeline",
     title: "Why I chose Kinesis over SQS for the messaging pipeline",
     date: "Jun 2025",
@@ -345,7 +356,7 @@ function Article1AiDiagram() {
         <SVGArrow x1={300} y1={51} x2={300} y2={75} />
 
         <SVGBox x={150} y={75} w={300} text="Persist message" />
-        
+
         <SVGArrow x1={300} y1={93} x2={420} y2={93} label="trigger" />
         <SVGBox x={420} y={75} w={165} text="Real-time agent update" />
 
@@ -416,7 +427,7 @@ function Article2Diagram2() {
         <SVGArrow x1={250} y1={116} x2={250} y2={145} />
 
         <SVGBox x={130} y={145} w={240} text="Hierarchy Resolver" accent={true} />
-        
+
         <SVGArrow x1={250} y1={181} x2={140} y2={210} />
         <SVGArrow x1={250} y1={181} x2={360} y2={210} />
 
@@ -556,7 +567,7 @@ function Article3IntroDiagram() {
         <SVGArrow x1={250} y1={51} x2={250} y2={80} />
 
         <SVGBox x={150} y={80} w={200} text="Check Redis" />
-        
+
         <SVGArrow x1={350} y1={98} x2={390} y2={98} label="hit" />
         <SVGBox x={390} y={80} w={90} text="return" />
 
@@ -591,7 +602,7 @@ function Article3ReadDiagram() {
         <SVGArrow x1={250} y1={181} x2={250} y2={210} />
 
         <SVGBox x={150} y={210} w={200} text="Check Redis" />
-        
+
         <SVGArrow x1={350} y1={228} x2={390} y2={228} label="hit" />
         <SVGBox x={390} y={210} w={90} text="return" />
 
@@ -748,6 +759,64 @@ function Article3ScanDiagram() {
   );
 }
 
+function Article4ImpersonationDiagram() {
+  return (
+    <div className="my-8 rounded-2xl border border-hairline bg-surface/20 p-6 sm:p-8">
+      <h4 className="mb-6 text-sm font-semibold tracking-tight text-paper text-center">
+        Dual-Header Impersonation Overlay Flow
+      </h4>
+      <svg viewBox="0 0 550 360" className="mx-auto w-full max-w-md h-auto">
+        <SVGDefs />
+        {/* Top: Incoming Headers */}
+        <text x={275} y={20} textAnchor="middle" className="fill-slate font-mono text-[10px] uppercase tracking-wider">
+          Client Requests (Dual-Header)
+        </text>
+        <SVGBox x={20} y={40} w={230} text="Authorization: Bearer [Admin JWT]" />
+        <SVGBox x={300} y={40} w={230} text="X-Impersonation-Token: [Imp JWT]" accent={true} />
+
+        {/* Arrows to verification */}
+        <SVGArrow x1={135} y1={76} x2={135} y2={130} label="auth" />
+        <SVGArrow x1={415} y1={76} x2={415} y2={130} label="overlay" />
+
+        {/* Verification Layers */}
+        <SVGBox x={20} y={130} w={230} text="Cognito JWT Validation" />
+        <SVGBox x={300} y={130} w={230} text="Impersonation Service (Redis Check)" accent={true} />
+
+        {/* Dynamic lookup arrow for Redis session validation */}
+        <path d="M 415 166 L 415 200" stroke="rgba(255, 255, 255, 0.16)" strokeDasharray="4 4" markerEnd="url(#arrow)" />
+        <text x={425} y={188} className="fill-slate font-mono text-[9px] uppercase">Session Store</text>
+        <SVGBox x={330} y={200} w={170} text="Redis: session:imp:[id]" h={30} />
+
+        {/* Connect back from Redis check */}
+        <path d="M 415 230 L 415 270" stroke="rgba(255, 255, 255, 0.16)" markerEnd="url(#arrow)" />
+        <path d="M 135 166 L 135 270" stroke="rgba(255, 255, 255, 0.16)" markerEnd="url(#arrow)" />
+
+        {/* Bottom: Resolved microservice context */}
+        <rect
+          x={80}
+          y={270}
+          width={390}
+          height={70}
+          rx={8}
+          fill="var(--color-surface)"
+          stroke="var(--color-signal)"
+          strokeWidth={1}
+          className="stroke-signal"
+        />
+        <text x={275} y={292} textAnchor="middle" className="fill-signal font-mono text-[11px] font-bold uppercase tracking-wider">
+          Resolved Service Context (req)
+        </text>
+        <text x={95} y={312} className="fill-paper font-mono text-[10px]">
+          req.actor = Platform Administrator (Sub)
+        </text>
+        <text x={95} y={328} className="fill-signal font-mono text-[10px] font-medium">
+          req.user  = Impersonated Tenant User (Sub)
+        </text>
+      </svg>
+    </div>
+  );
+}
+
 // ------------------------------------------------------------- Article Pages Content
 const ARTICLE_1 = (
   <>
@@ -781,7 +850,7 @@ const ARTICLE_1 = (
     <p>Consider a simple sequence:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`10:00:01 Customer sends message A
+        {`10:00:01 Customer sends message A
 10:00:02 Customer sends message B
 10:00:03 Agent sends reply C
 10:00:04 Provider reports C as delivered
@@ -844,13 +913,13 @@ const ARTICLE_1 = (
       internal domain consistent.
     </p>
     <p>The important architectural principle is that channel-specific payloads should not leak
-       throughout the system.</p>
+      throughout the system.</p>
     <p>WhatsApp has one event structure. Instagram has another. Messenger has another. Web Chat is under our own control.</p>
     <p>Internally, they are normalized into a common Pulse message model.</p>
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`interface PulseMessage {
+        {`interface PulseMessage {
   tenantId: string;
   conversationId: string;
   channel: 'whatsapp' | 'messenger' | 'instagram' | 'webchat';
@@ -942,7 +1011,7 @@ const ARTICLE_1 = (
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`await kinesis.send(
+        {`await kinesis.send(
   new PutRecordCommand({
     StreamName: 'pulse-message-stream',
     PartitionKey: conversationId,
@@ -1080,7 +1149,7 @@ const ARTICLE_1 = (
     <p>It is tempting to write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`Webhook
+        {`Webhook
 → query tenant
 → query channel
 → query contact
@@ -1118,7 +1187,7 @@ const ARTICLE_1 = (
     <p>For example, Pulse may create:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`internal_message_id = msg_123
+        {`internal_message_id = msg_123
 client_ref_id = ref_abc
 platform_message_id = null`}
       </code>
@@ -1129,11 +1198,11 @@ platform_message_id = null`}
       message ID.
     </p>
     <p>The system then reconciles:</p>
-    
+
     <Article1ReconcileDiagram1 />
 
     <p>After that, delivery lifecycle events may arrive:</p>
-    
+
     <Article1ReconcileDiagram2 />
 
     <p>These are not independent jobs.</p>
@@ -1151,7 +1220,7 @@ platform_message_id = null`}
     </h2>
     <p>Pulse is AI-first, but I deliberately did not put AI generation in the critical delivery path.</p>
     <p>The flow is closer to:</p>
-    
+
     <Article1AiDiagram />
 
     <p>This is important for both reliability and latency.</p>
@@ -1315,7 +1384,7 @@ platform_message_id = null`}
     <p>A stream retained without a replay strategy is wasted complexity.</p>
     <p>So I would not choose Kinesis just because the system uses the word “event-driven”.</p>
     <p>I chose it because Pulse had a combination of requirements that aligned with an
-       ordered stream:</p>
+      ordered stream:</p>
     <ul className="list-disc list-inside space-y-2 text-mist pl-2">
       <li>conversation-local ordering</li>
       <li>independent downstream consumers</li>
@@ -1397,7 +1466,7 @@ const ARTICLE_2 = (
     <p>This:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "contacts.read": true
 }`}
       </code>
@@ -1436,7 +1505,7 @@ const ARTICLE_2 = (
     <p>For example:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "module": "contacts",
   "action": "read",
   "allowed": true,
@@ -1458,7 +1527,7 @@ const ARTICLE_2 = (
     <p>But the role should not permanently store an expanded list such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "accessibleUserIds": [
     "u1",
     "u2",
@@ -1517,7 +1586,7 @@ const ARTICLE_2 = (
     <p>The Contacts service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (user.role === 'manager') {
+        {`if (user.role === 'manager') {
   // include team
 }`}
       </code>
@@ -1525,7 +1594,7 @@ const ARTICLE_2 = (
     <p>The Leads service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (scope === 2) {
+        {`if (scope === 2) {
   // include direct reports
 }`}
       </code>
@@ -1533,7 +1602,7 @@ const ARTICLE_2 = (
     <p>The Search service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (user.isAdmin) {
+        {`if (user.isAdmin) {
   // bypass filters
 }`}
       </code>
@@ -1564,7 +1633,7 @@ const ARTICLE_2 = (
     <p>or a policy-oriented endpoint with inputs such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "userId": "user-123",
   "tenantId": "tenant-456",
   "module": "contacts",
@@ -1576,7 +1645,7 @@ const ARTICLE_2 = (
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "allowed": true,
   "scope": 2,
   "visibility": {
@@ -1607,7 +1676,7 @@ const ARTICLE_2 = (
     <p>For example:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "module": "contacts",
   "action": "read",
   "allowed": true,
@@ -1629,7 +1698,7 @@ const ARTICLE_2 = (
     <p>But the role should not permanently store an expanded list such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "accessibleUserIds": [
     "u1",
     "u2",
@@ -1688,7 +1757,7 @@ const ARTICLE_2 = (
     <p>The Contacts service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (user.role === 'manager') {
+        {`if (user.role === 'manager') {
   // include team
 }`}
       </code>
@@ -1696,7 +1765,7 @@ const ARTICLE_2 = (
     <p>The Leads service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (scope === 2) {
+        {`if (scope === 2) {
   // include direct reports
 }`}
       </code>
@@ -1704,7 +1773,7 @@ const ARTICLE_2 = (
     <p>The Search service may write:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`if (user.isAdmin) {
+        {`if (user.isAdmin) {
   // bypass filters
 }`}
       </code>
@@ -1735,7 +1804,7 @@ const ARTICLE_2 = (
     <p>or a policy-oriented endpoint with inputs such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "userId": "user-123",
   "tenantId": "tenant-456",
   "module": "contacts",
@@ -1747,7 +1816,7 @@ const ARTICLE_2 = (
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "allowed": true,
   "scope": 2,
   "visibility": {
@@ -1787,7 +1856,7 @@ const ARTICLE_2 = (
     <p>The service should not trust a client-provided body field such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "userId": "someone-else"
 }`}
       </code>
@@ -1797,7 +1866,7 @@ const ARTICLE_2 = (
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`const subjectId = req.user.sub;`}
+        {`const subjectId = req.user.sub;`}
       </code>
     </pre>
     <p>The service then evaluates whether that subject can perform the requested action.</p>
@@ -1841,7 +1910,7 @@ const ARTICLE_2 = (
     <p>For own scope:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   tenantId,
   ownerId: subjectId
 }`}
@@ -1850,7 +1919,7 @@ const ARTICLE_2 = (
     <p>For team or hierarchy scope:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   tenantId,
   ownerId: {
     $in: eligibleUserIds
@@ -1861,7 +1930,7 @@ const ARTICLE_2 = (
     <p>For all scope:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   tenantId
 }`}
       </code>
@@ -1869,7 +1938,7 @@ const ARTICLE_2 = (
     <p>Sharing can extend the visibility predicate:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   tenantId,
   $or: [
     { ownerId: { $in: eligibleUserIds } },
@@ -1895,7 +1964,7 @@ const ARTICLE_2 = (
     <p>Imagine:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`VP
+        {`VP
 ├── Manager A
 │   ├── User A1
 │   └── User A2
@@ -1976,7 +2045,7 @@ const ARTICLE_2 = (
     <p>Effective access is derived from multiple changing inputs:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`User
+        {`User
 + role assignments
 + role permissions
 + scope
@@ -2053,7 +2122,7 @@ const ARTICLE_2 = (
     <p>My decision was not to push a permanently expanded list such as:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "accessibleUsers": [
     "u1",
     "u2",
@@ -2119,7 +2188,7 @@ const ARTICLE_2 = (
     <p>Our existing service flow relies heavily on the authenticated request context:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`token
+        {`token
 → extract sub
 → load permissions/scope
 → authorize action
@@ -2136,7 +2205,7 @@ const ARTICLE_2 = (
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`actor   = platform administrator
+        {`actor   = platform administrator
 subject = impersonated tenant user`}
       </code>
     </pre>
@@ -2218,7 +2287,7 @@ subject = impersonated tenant user`}
       That consistency is the real goal.
     </p>
     <p>The architecture I ended up with can be summarized as:</p>
-    
+
     <Article2Diagram3 />
 
     <p>RBAC was only the starting point.</p>
@@ -2241,7 +2310,7 @@ const ARTICLE_3 = (
   <>
     <p>Caching is easy until data changes.</p>
     <p>The first version of almost every cache looks reasonable:</p>
-    
+
     <Article3IntroDiagram />
 
     <p>That is the easy part.</p>
@@ -2255,7 +2324,7 @@ const ARTICLE_3 = (
     <p>For example:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`dev:contacts:tenant-42:list:page-1
+        {`dev:contacts:tenant-42:list:page-1
 dev:contacts:tenant-42:list:page-2
 dev:contacts:tenant-42:list:status-active
 dev:contacts:tenant-42:list:owner-u123
@@ -2291,7 +2360,7 @@ dev:contacts:tenant-42:list:search-acme`}
       The first instinct: delete matching keys
     </h2>
     <p>A straightforward invalidation strategy is:</p>
-    
+
     <Article3ScanDiagram />
 
     <p>At small scale, this feels fine.</p>
@@ -2326,7 +2395,7 @@ dev:contacts:tenant-42:list:search-acme`}
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`let cursor = '0';
+        {`let cursor = '0';
 do {
   const [nextCursor, keys] = await redis.scan(
     cursor,
@@ -2400,7 +2469,7 @@ do {
     <p>Now the application may show:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`Update API:
+        {`Update API:
   success
 
 List API:
@@ -2504,7 +2573,7 @@ List API:
     <p>The application canonicalizes the query:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`{
+        {`{
   "page": 1,
   "status": "active"
 }`}
@@ -2579,7 +2648,7 @@ List API:
       The read path
     </h2>
     <p>Conceptually:</p>
-    
+
     <Article3ReadDiagram />
 
     <p>The exact implementation can vary.</p>
@@ -2599,7 +2668,7 @@ List API:
       The write path
     </h2>
     <p>After a successful database mutation:</p>
-    
+
     <Article3WriteDiagram />
 
     <p>The ordering matters.</p>
@@ -2822,14 +2891,14 @@ List API:
     <p>A possible design is:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`contacts:list-version:tenant-42
+        {`contacts:list-version:tenant-42
 contacts:detail:tenant-42:contact-99`}
       </code>
     </pre>
     <p>After updating contact 99:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`DEL contacts:detail:tenant-42:contact-99
+        {`DEL contacts:detail:tenant-42:contact-99
 INCR contacts:list-version:tenant-42`}
       </code>
     </pre>
@@ -2862,7 +2931,7 @@ INCR contacts:list-version:tenant-42`}
     <p>Conceptually:</p>
     <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
       <code>
-{`permission-version:\${tenant}:\${user}
+        {`permission-version:\${tenant}:\${user}
 hierarchy-version:\${tenant}:\${user}
 sharing-version:\${tenant}:\${user}`}
       </code>
@@ -2928,7 +2997,7 @@ sharing-version:\${tenant}:\${user}`}
     <Article3Diagram3 />
 
     <p>And the write path no longer needs to know how many cached representations of the
-       old data exist.</p>
+      old data exist.</p>
 
     <hr className="border-t border-hairline my-12" />
 
@@ -2965,6 +3034,263 @@ sharing-version:\${tenant}:\${user}`}
     <p>But correctness no longer waits for a scan to finish.</p>
     <p>Sometimes the simplest invalidation strategy is not deleting more efficiently.</p>
     <p>It is making deletion unnecessary.</p>
+  </>
+);
+
+const ARTICLE_4 = (
+  <>
+    <p>
+      In multi-tenant SaaS platforms, administrators frequently need to troubleshoot client problems. 
+      Whether it is debugging a broken event workflow or validating custom billing triggers, seeing exactly 
+      what the customer sees is often the only way to resolve complex tenant-scoped support requests.
+    </p>
+    <p>
+      But how do you let an administrator access a tenant workspace as a specific customer user without compromising security?
+    </p>
+    <p>
+      The naive solution is to build a back door: generate synthetic user accounts, bypass authentication, or share 
+      credentials. These approaches are insecure and break regulatory compliance. A secure system must preserve 
+      standard authentication flows, enforce strict access constraints, and maintain a complete audit trail.
+    </p>
+    <p>
+      While building the foundation for{" "}
+      <Link href="/work" className="underline text-paper hover:text-signal transition-colors">
+        SalesAstra
+      </Link>
+      , we solved this by designing a **Dual-Header Impersonation Framework**. This architecture overlays 
+      an administrative actor identity with an effective target authorization context.
+    </p>
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      The Core Architectural Principles
+    </h2>
+    <p>
+      We designed our impersonation model around four strict architectural constraints:
+    </p>
+    <ul className="list-disc list-inside space-y-2 text-mist pl-2">
+      <li><strong>Cognito stays in control:</strong> AWS Cognito remains the sole authentication provider. API Gateway continues validating Cognito access tokens normally.</li>
+      <li><strong>Dynamic Authorization Overlay:</strong> The impersonation context does not replace authentication. It overlays identity. The administrator remains the <em>actor</em>, but permission and query scopes are evaluated against the <em>effective user</em>.</li>
+      <li><strong>Business Logic Ignorance:</strong> No downstream business service should write custom logic for impersonation. They access the resolved <code>req.user</code> exactly as they do in ordinary client sessions.</li>
+      <li><strong>Strict Auditing:</strong> Every action performed during impersonation must be traced back to both the administrative actor and the target user.</li>
+    </ul>
+
+    <Article4ImpersonationDiagram />
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      How Dual-Header Impersonation Flows
+    </h2>
+    <p>
+      When a Platform Administrator initiates an impersonation session from the platform administration UI, they must select the target user and provide a valid reason.
+    </p>
+    <p>
+      The UI calls the User Service endpoint:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`POST /admin/impersonation/start
+Content-Type: application/json
+
+{
+  "targetUserId": "user_abc123",
+  "tenantId": "tenant_xyz789",
+  "reason": "Investigating failing Meta webhook ingestion"
+}`}
+      </code>
+    </pre>
+    <p>
+      The User Service performs a series of validation checks:
+    </p>
+    <ul className="list-disc list-inside space-y-2 text-mist pl-2">
+      <li>Verifies the administrator has the <code>organizations:impersonate</code> permission.</li>
+      <li>Validates the existence of the tenant and the target user.</li>
+      <li>Revokes any existing impersonation sessions active for this administrator.</li>
+    </ul>
+    <p>
+      If validation passes, a new document is written to the <code>impersonation_sessions</code> MongoDB collection and cached in Redis. 
+      The service then generates a short-lived, signed JWT containing the session metadata.
+    </p>
+
+    <h3 className="text-xl font-medium tracking-tight text-paper mt-8 mb-3">
+      The Impersonation Token Claims
+    </h3>
+    <p>
+      The generated impersonation token describes the session boundaries:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`{
+  "actorSub": "cognito-admin-subject-uuid",
+  "targetSub": "cognito-target-user-uuid",
+  "targetUserId": "user_abc123",
+  "tenantId": "tenant_xyz789",
+  "sessionId": "imp_sess_99999",
+  "accessMode": "FULL" | "VIEW_ONLY",
+  "iss": "platform-impersonation",
+  "aud": "tenant-apis"
+}`}
+      </code>
+    </pre>
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      Backend Authentication and Overlay Middleware
+    </h2>
+    <p>
+      Once the tenant workspace opens, the application sends every API request with three critical pieces of metadata:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`Authorization: Bearer <Platform_Admin_Cognito_Token>
+X-Impersonation-Token: <Impersonation_Session_JWT>
+x-tenant-id: tenant_xyz789`}
+      </code>
+    </pre>
+    <p>
+      Every microservice running in ECS executes the authentication middleware in two separate phases:
+    </p>
+    
+    <p className="font-semibold text-paper pl-4 border-l border-hairline-strong">
+      Phase 1: Authenticate the Actor
+    </p>
+    <p>
+      The API Gateway parses and validates the Cognito access token. If valid, the authenticated administrator 
+      is resolved as the request actor:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`req.actor = { sub: decodedCognitoToken.sub, role: 'platform-admin' };`}
+      </code>
+    </pre>
+
+    <p className="font-semibold text-paper pl-4 border-l border-hairline-strong">
+      Phase 2: Overlay the Impersonated Identity
+    </p>
+    <p>
+      If the request contains the <code>X-Impersonation-Token</code> header, the middleware intercepts the flow 
+      and executes validation checks:
+    </p>
+    <ul className="list-disc list-inside space-y-2 text-mist pl-2">
+      <li>Validates the signature, issuer, and expiration of the impersonation JWT.</li>
+      <li>Ensures the tenant ID in the token matches the header <code>x-tenant-id</code>.</li>
+      <li>Ensures the <code>actorSub</code> claim inside the impersonation token matches the authenticated actor's subject resolved in Phase 1.</li>
+      <li>Performs a lookup in Redis for <code>session:imp:[sessionId]</code> to ensure the session remains active and has not been manually revoked.</li>
+    </ul>
+    <p>
+      If validation passes, the request context is transformed:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`req.user = { sub: token.targetSub, id: token.targetUserId };
+req.impersonation = { sessionId: token.sessionId, accessMode: token.accessMode };
+req.authType = 'IMPERSONATION';`}
+      </code>
+    </pre>
+    <p>
+      By rewriting <code>req.user</code> to represent the target user's identity, the downstream microservices proceed 
+      without modifying any business logic. All database query scopes (e.g. <code>OWN</code> or <code>TEAM</code>) and RBAC evaluations resolve 
+      naturally for the target user.
+    </p>
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      Security Controls and Caching Guarantees
+    </h2>
+    <p>
+      Impersonation bypasses credentials, which makes it a high-risk security vector. We built multiple safety nets:
+    </p>
+    
+    <h3 className="text-xl font-medium tracking-tight text-paper mt-8 mb-3">
+      1. Immediate Permissions Invalidation
+    </h3>
+    <p>
+      Authorization systems often cache user roles and permissions in Redis to avoid hitting the database on every request. 
+      When impersonation starts, we must ensure the system does not load cached administrator roles. 
+      The backend resolves permission scopes starting from the target user subject:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`// Permissions resolution hierarchy
+const subjectId = req.user.sub; // Resolves to targetSub when impersonation is active`}
+      </code>
+    </pre>
+
+    <h3 className="text-xl font-medium tracking-tight text-paper mt-8 mb-3">
+      2. View-Only vs Full Access Modes
+    </h3>
+    <p>
+      If the admin specifies <code>VIEW_ONLY</code> access during session initialization, the frontend disables form submits, 
+      save buttons, and action panels. To enforce this server-side, the backend API middleware intercepts mutating HTTP methods 
+      (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>, <code>PATCH</code>) when <code>req.impersonation.accessMode === 'VIEW_ONLY'</code>, 
+      returning a <code>403 Forbidden</code> block immediately.
+    </p>
+
+    <h3 className="text-xl font-medium tracking-tight text-paper mt-8 mb-3">
+      3. Immutability of the Audit Log
+    </h3>
+    <p>
+      Standard requests record the action performer using a single identity field. 
+      Under impersonation, the logging system intercepts the request and structures the audit document differently:
+    </p>
+    <pre className="overflow-x-auto rounded-lg border border-hairline bg-surface p-4 font-mono text-sm text-paper">
+      <code>
+{`{
+  "action": "contacts.update",
+  "performedBy": "cognito-admin-subject-uuid", // Administrative actor
+  "performedAs": "cognito-target-user-uuid",   // Target tenant user
+  "impersonated": true,
+  "sessionId": "imp_sess_99999",
+  "timestamp": "2026-08-08T10:45:00Z"
+}`}
+      </code>
+    </pre>
+    <p>
+      This audit model guarantees compliance: administrators cannot perform silent actions, and tenants are assured that every 
+      action taken on their workspace is clearly demarcated.
+    </p>
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      Legacy Ghost User Comparison
+    </h2>
+    <p>
+      The dual-header overlay architecture replaced a legacy <strong>Ghost User</strong> approach. Under that old model, 
+      the system generated a synthetic "ghost" user inside the database, generated a short-lived code, and exchanged it 
+      for a synthetic bearer token representing only the ghost user.
+    </p>
+    <p>
+      The legacy flow suffered from severe architectural flaws:
+    </p>
+    <ul className="list-disc list-inside space-y-2 text-mist pl-2">
+      <li>It polluted the tenant database with dummy accounts.</li>
+      <li>It lost the real administrator's identity at the API Gateway level, making tracing difficult.</li>
+      <li>It required managing synthetic Cognito users or bypass loops in auth layers.</li>
+    </ul>
+    <p>
+      While the Ghost User flow remains supported for legacy systems, standardizing on the dual-header architecture 
+      keeps our AWS Cognito credentials untampered, audit trails crystal clear, and microservice business layers fully decoupled.
+    </p>
+
+    <hr className="border-t border-hairline my-12" />
+
+    <h2 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl mt-10 mb-4">
+      The Lesson
+    </h2>
+    <p>
+      Architecting admin impersonation is not a matter of creating a backdoor. It is about creating a secure, 
+      auditable pipeline that flows parallel to user requests.
+    </p>
+    <p>
+      By separating <strong>authentication</strong> (who is signing the request) from <strong>authorization</strong> (whose permissions 
+      are being checked), we built a system that keeps our microservices simple, our audits secure, and our SaaS admins 
+      productive.
+    </p>
   </>
 );
 
@@ -3011,6 +3337,7 @@ export default async function BlogPostPage({
         <Container className="py-16 lg:py-24">
           <div className="mx-auto max-w-2xl">
             <article className="space-y-6 text-pretty text-lg leading-relaxed text-mist">
+              {slug === "securing-admin-access-dual-header-impersonation" && ARTICLE_4}
               {slug === "kinesis-vs-sqs-messaging-pipeline" && ARTICLE_1}
               {slug === "rbac-system-that-doesnt-lie" && ARTICLE_2}
               {slug === "redis-version-based-caching" && ARTICLE_3}

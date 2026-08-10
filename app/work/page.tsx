@@ -31,11 +31,10 @@ export default function WorkPage() {
             {projects.map((p, i) => (
               <li key={p.slug}>
                 <article
-                  className={`grid gap-10 py-16 lg:gap-16 lg:py-24 ${
-                    i % 2 === 1
+                  className={`grid gap-10 py-16 lg:gap-16 lg:py-24 ${i % 2 === 1
                       ? "lg:grid-cols-[1.05fr_1fr]"
                       : "lg:grid-cols-[1fr_1.05fr]"
-                  } lg:items-center`}
+                    } lg:items-center`}
                 >
                   <Reveal className={i % 2 === 1 ? "lg:order-2" : ""}>
                     <div>
@@ -71,6 +70,13 @@ export default function WorkPage() {
                         <div className="mt-6 flex flex-col gap-2">
                           <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-slate">Related writing</span>
                           <div className="flex flex-col gap-2">
+                            <Link
+                              href="/blog/securing-admin-access-dual-header-impersonation"
+                              className="inline-flex items-center gap-1.5 text-[13px] text-mist transition-colors hover:text-signal"
+                            >
+                              <span>→</span>
+                              <span className="underline decoration-hairline-strong underline-offset-4 hover:decoration-signal">Securing admin access with dual-header impersonation</span>
+                            </Link>
                             <Link
                               href="/blog/rbac-system-that-doesnt-lie"
                               className="inline-flex items-center gap-1.5 text-[13px] text-mist transition-colors hover:text-signal"

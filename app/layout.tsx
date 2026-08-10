@@ -3,6 +3,7 @@ import { Instrument_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/app/_components/site-nav";
 import { SiteFooter } from "@/app/_components/site-footer";
+import { ChatAssistant } from "@/app/_components/chat-assistant";
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 const instrument = Instrument_Sans({
@@ -51,6 +52,7 @@ export default function RootLayout({
         <SiteNav />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <ChatAssistant />
         <GoogleAnalytics gaId="G-L2Q4Y88SER" />
       </body>
     </html>

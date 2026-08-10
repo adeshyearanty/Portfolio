@@ -15,7 +15,7 @@ export function SiteFooter() {
               Let&apos;s build systems that scale.
             </p>
             <Link
-              href="https://wa.me/919700015263?text=Hi%20Adesh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect."
+              href="https://wa.me/message/WBX66Q3PYHI6N1"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 text-sm text-mist transition-colors hover:text-signal"
