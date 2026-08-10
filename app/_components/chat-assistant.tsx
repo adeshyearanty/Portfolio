@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { useChat, type ChatMessage } from "@/app/_hooks/use-chat";
 
 const STARTER_PROMPTS = [
@@ -505,7 +507,9 @@ function MessageBubble({ message }: { message: ChatMessage }) {
         {!isUser ? (
           message.content ? (
             <div className="chat-markdown">
-              <ReactMarkdown>{message.content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                {message.content}
+              </ReactMarkdown>
               {isStreamingMsg && (
                 <span className="inline-block w-1.5 h-3.5 bg-signal ml-0.5 animate-pulse align-middle" />
               )}
