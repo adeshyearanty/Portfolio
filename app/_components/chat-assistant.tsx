@@ -503,25 +503,24 @@ function MessageBubble({ message }: { message: ChatMessage }) {
         } ${isFailed ? "border-red-500/40" : ""}`}
       >
         {!isUser ? (
-          <div className="chat-markdown">
-            {message.content ? (
+          message.content ? (
+            <div className="chat-markdown">
               <ReactMarkdown>{message.content}</ReactMarkdown>
-            ) : null}
-            {isStreamingMsg && (
-              <span className="inline-block w-1.5 h-3.5 bg-signal ml-0.5 animate-pulse align-middle" />
-            )}
-          </div>
+              {isStreamingMsg && (
+                <span className="inline-block w-1.5 h-3.5 bg-signal ml-0.5 animate-pulse align-middle" />
+              )}
+            </div>
+          ) : isStreamingMsg ? (
+            <div className="flex items-center gap-1.5 py-0.5">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal [animation-delay:0.2s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal [animation-delay:0.4s]" />
+            </div>
+          ) : null
         ) : (
           <p className="whitespace-pre-line text-[13px]">{message.content}</p>
         )}
 
-        {isStreamingMsg && message.content.length === 0 && (
-          <div className="flex items-center gap-1.5 py-0.5">
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal" />
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal [animation-delay:0.2s]" />
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-signal [animation-delay:0.4s]" />
-          </div>
-        )}
         {isFailed && (
           <p className="text-[10px] text-red-400/80 mt-1">⚠ Response failed</p>
         )}
